@@ -9,45 +9,30 @@ class Solution {
 public:
     void main() {
         cin >> n;
-        vector<map<int, bool>> vvi(3);
-            /*
-                第一个哈希表储存已占用的列
-                第二个哈希表储存已占用的右上到左下对角线
-                第三个哈希表储存已占用的左上到右下对角线
-            */
+        vector<bool> temp(n*2+1,true);
+        vector<vector<bool>> vvi(3,temp);
+        /*
+         * 建立3个数组
+         * 第一个表示竖行的占用情况
+         * 第二个用x-y+n表示左下到右上的占用情况
+         * 第三个用x+y表示左上到右下的占用情况
+         */
         solve(1, vvi);
         cout << methods << endl;
     }
 
-    void solve(int row, vector<map<int, bool>> vvi) {
-        // DFS
-        if (row == n + 1) {
+    void solve(int y, vector<vector<bool>> vvi) {
+        //dfs
+        if (y == n + 1) {
             methods++;
             return;
         }
-        for (int i = 1; i <= n; i++) {
-            vector<map<int, bool>> temp = vvi;
-            try {
-                vvi[0].at(i);
-                goto m;
+        for (int x = 1; x <= n; x++) {
+            if(vvi[0][x]&&vvi[1][x-y+n]&&vvi[2][x+y]){
+                vector<vector<bool>> temp = vvi;
+                temp[0][x] = temp[1][x-y+n] = temp[2][x+y] = false;
+                solve(y+1,temp);
             }
-            catch (...) {}
-            try {
-                vvi[1].at(i - row);
-                goto m;
-            }
-            catch (...) {}
-            try {
-                vvi[2].at(i + row);
-                goto m;
-            }
-            catch (...) {}
-
-            temp[0][i] = true;
-            temp[1][i - row] = true;
-            temp[2][i + row] = true;
-            solve(row + 1, temp);
-            m:; //end
         }
     }
 };

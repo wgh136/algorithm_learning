@@ -35,8 +35,9 @@ using namespace std;
 const int MOD = 998244353;
 
 class Solution{
-    int a[101][101], dp[110][110];
-    int ans = 0;
+    int a[101][101];
+    ll dp[110][110];
+    ll ans = 0;
     int n = 0;
 public:
     void main(){

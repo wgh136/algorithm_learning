@@ -79,3 +79,54 @@ int main()
     return 0;
 }
 ```
+
+## D. Playoff
+[题目](https://codeforces.com/contest/1767/problem/D)
+
+观察法
+
+首先很容易看出答案应当是连续的
+
+其次，设1的数量为a, 0的数量为b, 多举几个例子可以发现最小值为$2^{a}$, 最大值为$2^n - 2^b + 1$
+
+至于证明，别问，不会
+
+```c++
+#include <bits/stdc++.h>
+using namespace std;
+
+class Solution{
+    int n = 0;
+    string s;
+    int num_0 = 0;
+    int num_1 = 0;
+public:
+    void main(){
+        cin >> n;
+        cin >> s;
+
+        for(int ct=0;ct<n;ct++){
+            if(s[ct] == '1')
+                num_1++;
+            else
+                num_0++;
+        }
+
+        int l = pow(2,num_1), r = pow(2,n) - pow(2,num_0) + 1;
+
+        for(int i = l;i <=r;i++){
+            cout << i << " ";
+        }
+    }
+};
+
+int main()
+{
+    std::ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    cout.tie(nullptr);
+    Solution s;
+    s.main();
+    return 0;
+}
+```
